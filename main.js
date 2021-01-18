@@ -96,11 +96,29 @@ console.log(getNamesSortedByFriendsCount(users));
 // [ 'Moore Hensley', 'Sharlene Bush', 'Elma Head', 'Carey Barr', 'Blackburn Dotson', 'Sheree Anthony', 'Ross Vazquez' ]
 
 // Задание 10
-// Получить массив всех умений всех пользователей (поле skills), при этом не должно быть повторяющихся умений и они должны быть отсортированы в алфавитном порядке.
+// Получить массив всех умений всех пользователей (поле skills), при этом не должно быть повторяющихся умений 
+// и они должны быть отсортированы в алфавитном порядке.
 
-// const getSortedUniqueSkills = users => {
-//   // твой код
-// };
+const getSortedUniqueSkills = users => {
+    
+    const allSkills = users
+        .reduce((acc, user) => {
+            acc.push(...user.skills)
+            return acc;
+        }, [])
+        .sort((prev, next) => {
+            if (prev.toLowerCase() < next.toLowerCase()) {
+                return -1;
+            } if (prev.toLowerCase() > next.toLowerCase()) {
+                return 1;
+            } return 0;
+        });
 
-// console.log(getSortedUniqueSkills(users));
-// // [ 'adipisicing', 'amet', 'anim', 'commodo', 'culpa', 'elit', 'ex', 'ipsum', 'irure', 'laborum', 'lorem', 'mollit', 'non', 'nostrud', 'nulla', 'proident', 'tempor', 'velit', 'veniam' ]
+    const uniqueArray = allSkills.filter(function (item, index){ 
+        return allSkills.indexOf(item) === index;
+    })
+    return uniqueArray;
+};
+
+console.log(getSortedUniqueSkills(users));
+// [ 'adipisicing', 'amet', 'anim', 'commodo', 'culpa', 'elit', 'ex', 'ipsum', 'irure', 'laborum', 'lorem', 'mollit', 'non', 'nostrud', 'nulla', 'proident', 'tempor', 'velit', 'veniam' ]
