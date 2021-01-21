@@ -54,7 +54,7 @@ console.log(getUserWithEmail(users, 'elmahead@omatom.com')); // {объект п
 // Получить массив пользователей попадающих в возрастную категорию от min до max лет (поле age).
 
 const getUsersWithAge = (users, min, max) => {
-    return users.filter(user => user.age > min && user.age < max);
+    return users.filter(user => user.age >= min && user.age <= max);
 };
 
 console.log(getUsersWithAge(users, 20, 30)); // [объект Ross Vazquez, объект Elma Head, объект Carey Barr]
@@ -99,26 +99,43 @@ console.log(getNamesSortedByFriendsCount(users));
 // Получить массив всех умений всех пользователей (поле skills), при этом не должно быть повторяющихся умений 
 // и они должны быть отсортированы в алфавитном порядке.
 
-const getSortedUniqueSkills = users => {
+// const getSortedUniqueSkills = users => {
     
-    const allSkills = users
+//     const allSkills = users
+//         .reduce((acc, user) => {
+//             acc.push(...user.skills)
+//             return acc;
+//         }, [])
+//         .sort((prev, next) => {
+//             if (prev.toLowerCase() < next.toLowerCase()) {
+//                 return -1;
+//             } if (prev.toLowerCase() > next.toLowerCase()) {
+//                 return 1;
+//             } return 0;
+//         });
+
+//     const uniqueArray = allSkills.filter(function (item, index){ 
+//         return allSkills.indexOf(item) === index;
+//     })
+//     return uniqueArray;
+// };
+
+// console.log(getSortedUniqueSkills(users));
+// [ 'adipisicing', 'amet', 'anim', 'commodo', 'culpa', 'elit', 'ex', 'ipsum', 'irure', 'laborum', 'lorem', 'mollit', 'non', 'nostrud', 'nulla', 'proident', 'tempor', 'velit', 'veniam' ]
+
+// второй способ решения
+
+const getSortedUniqueSkills = users => {
+    const allSkillsSorted = users
         .reduce((acc, user) => {
-            acc.push(...user.skills)
+            const allSkills = user.skills.filter(skill => !acc.includes(skill));
+            acc.push(...allSkills)
             return acc;
         }, [])
-        .sort((prev, next) => {
-            if (prev.toLowerCase() < next.toLowerCase()) {
-                return -1;
-            } if (prev.toLowerCase() > next.toLowerCase()) {
-                return 1;
-            } return 0;
-        });
-
-    const uniqueArray = allSkills.filter(function (item, index){ 
-        return allSkills.indexOf(item) === index;
-    })
-    return uniqueArray;
+        .sort();
+    return allSkillsSorted
 };
 
 console.log(getSortedUniqueSkills(users));
 // [ 'adipisicing', 'amet', 'anim', 'commodo', 'culpa', 'elit', 'ex', 'ipsum', 'irure', 'laborum', 'lorem', 'mollit', 'non', 'nostrud', 'nulla', 'proident', 'tempor', 'velit', 'veniam' ]
+
